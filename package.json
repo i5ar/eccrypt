@@ -1,0 +1,18 @@
+{
+  "name": "eccrypt",
+  "version": "0.0.1",
+  "description": "Crypt text files with easy",
+  "main": "manage.py",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cryptography"
+  ],
+  "author": "Pierpaolo Rasicci",
+  "license": "MIT",
+  "devDependencies": {
+    "lorem-ipsum": "^1.0.4",
+    "mkdirp": "^0.5.1"
+  }
+}
