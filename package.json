@@ -1,6 +1,6 @@
 {
   "name": "eccrypt",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Crypt text files with easy",
   "main": "manage.py",
   "scripts": {

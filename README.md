@@ -73,6 +73,7 @@ Generate some dummy text in the data directory:
 
 ##### Changelog
 
+- v0.0.3 - Improve the graphical interface;
 - v0.0.2 - Add a simple graphical interface.
 
 ##### TODO
