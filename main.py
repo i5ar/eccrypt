@@ -8,6 +8,8 @@ from tkinter import filedialog
 from encrypt import encrypt
 from decrypt import decrypt
 
+__version__ = "0.0.2"
+
 interface = tk.Tk()
 
 
@@ -167,6 +169,33 @@ radiobutton_private_key = tk.Radiobutton(
     command=lambda: enable_button_private_key(None))
 radiobutton_public_key.grid(column=1, row=1)
 radiobutton_private_key.grid(column=2, row=1)
+
+
+def save_configuration():
+    """Save configuration."""
+    pass
+
+
+def show_about():
+    """Show about."""
+    print(__version__)
+
+
+menubar = tk.Menu(interface)
+
+# create a pulldown menu, and add it to the menu bar
+filemenu = tk.Menu(menubar, tearoff=0)
+filemenu.add_command(label="Save", command=save_configuration)
+filemenu.add_separator()
+filemenu.add_command(label="Exit", command=interface.quit)
+menubar.add_cascade(label="File", menu=filemenu)
+
+helpmenu = tk.Menu(menubar, tearoff=0)
+helpmenu.add_command(label="About", command=show_about)
+menubar.add_cascade(label="Help", menu=helpmenu)
+
+# display the menu
+interface.config(menu=menubar)
 
 
 interface.mainloop()

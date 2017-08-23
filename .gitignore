@@ -67,6 +67,7 @@ target/
 .venv
 env/
 venv/
+activate.bat
 
 # Spyder project settings
 .spyderproject
