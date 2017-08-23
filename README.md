@@ -43,6 +43,8 @@ If something goes wrong try to update the package manager:
 
 ### Usage
 
+##### Terminal
+
 Encrypt a text file:
 
     python manage.py encrypt data/egg.txt --public-key eccrypt_rsa.pub
@@ -50,6 +52,14 @@ Encrypt a text file:
 Decrypt a text file:
 
     python manage.py decrypt data/egg.bin --private-key eccrypt_rsa
+
+##### Graphical interface
+
+Since `v0.0.2` is available a simple graphical interface.
+
+> You still need to launch it from the terminal
+
+For the time being, just run `python main.py`.
 
 ### Note
 
@@ -61,8 +71,12 @@ Generate some dummy text in the data directory:
 
     node loremipsum.js
 
+##### Changelog
+
+- v0.0.2 - Add a simple graphical interface.
+
 ##### TODO
 
 - Try out [loremipsum](https://pypi.python.org/pypi/loremipsum) and eventually
 integrate for testing purposes;
-- Maybe a GUI.
+- Store the key pair in a database.

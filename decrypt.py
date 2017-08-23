@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 """Decrypt a text file."""
 
+import os
+
 from Cryptodome.PublicKey import RSA
 from Cryptodome.Cipher import AES, PKCS1_OAEP
 
@@ -28,10 +30,11 @@ def decrypt(*args, **kwargs):
 
         # Decode data
         decoded_data = data.decode("utf-8")
-        print(decoded_data)
 
         # Generate the decrypted file
-        # filename, file_extension = os.path.splitext(encrypted_file)
-        # file_out = open(filename + '.txt', 'w')
-        # file_out.write(decoded_data)
-        # file_out.close()
+        if kwargs.get('output'):
+            file_out = open(kwargs.get('output'), "w")
+            file_out.write(decoded_data)
+            file_out.close()
+        else:
+            print(decoded_data)

@@ -78,7 +78,6 @@ node_modules/
 # Private RSA key
 eccrypt_rsa
 *.ppk
-*.pub
 
 # Data
 data/

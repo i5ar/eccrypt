@@ -20,7 +20,7 @@ def encrypt(*args, **kwargs):
     rsa_public_key = kwargs.get('rsa_public_key')
     for file_data in args:
         filename, file_extension = os.path.splitext(file_data)
-        file_out = open(filename + ".bin", "wb")
+        file_out = open(kwargs.get('output') or filename + ".bin", "wb")
 
         # Get the public key
         recipient_key = RSA.import_key(open(rsa_public_key).read())

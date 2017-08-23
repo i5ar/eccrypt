@@ -1,16 +1,17 @@
-// Generate some dummy data
-
+/**
+ * Generate some dummy data.
+ */
+// Import modules
 var fs = require('fs');
 var mkdirp = require('mkdirp');
-var rimraf = require('rimraf');
 var loremipsum = require('lorem-ipsum');
 const path = require('path');
 
 // Make directory
 var directory = 'data'
 mkdirp(directory, function (err) {
-    if (err) console.error(err)
-    else console.log(directory + ' was made!')
+  if (err) console.error(err)
+  else console.log(directory + ' was made!')
 });
 
 // Save file
