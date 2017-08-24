@@ -1,15 +1,18 @@
 #!/usr/bin/env python
 """Simple GUI for Easy Crypt."""
 
+import sys
+
 import tkinter as tk
 # from tkinter import ttk
 from tkinter import filedialog
+from tkinter import messagebox
 
 from encrypt import encrypt
 from decrypt import decrypt
-from tkinter import messagebox
+from generate import generate
 
-__version__ = "0.0.3-alpha"
+__version__ = "0.0.4"
 
 
 # Solarized colorscheme
@@ -218,11 +221,13 @@ class EasyButtons:
                 output=[filename])  # Convert `output` argument, must be a list
             self.status['text'] = "File encrypted and saved."
         except NameError as e:
-            messagebox.showinfo(e.__class__.__name__, e)
+            messagebox.showerror(e.__class__.__name__, e)
         except TypeError as e:
             msg = "Please, select a text file and a valid public key."
             print(msg, e)
-            messagebox.showinfo(e.__class__.__name__, msg)
+            messagebox.showerror(e.__class__.__name__, msg)
+        except IndexError as e:
+            messagebox.showerror(e.__class__.__name__, e)
 
     def save_decrypted_file(self):
         """Save decrypted file."""
@@ -240,11 +245,11 @@ class EasyButtons:
         except TypeError as e:
             msg = "Please, select an encrypted file and a valid private key."
             print(msg, e)
-            messagebox.showinfo(e.__class__.__name__, msg)
+            messagebox.showerror(e.__class__.__name__, msg)
         except NameError as e:
-            messagebox.showinfo(e.__class__.__name__, e)
+            messagebox.showerror(e.__class__.__name__, e)
         except ValueError as e:
-            messagebox.showinfo(e.__class__.__name__, e)
+            messagebox.showerror(e.__class__.__name__, e)
 
 
 root = tk.Tk()
@@ -258,8 +263,20 @@ def save_configuration():
         "Save", "This function is not yet available.")
 
 
+def generate_key_pair():
+    """Generate RSA key pair."""
+    filename = filedialog.asksaveasfilename()
+    if not filename:
+        return
+    try:
+        generate(filename)
+        b.status['text'] = "RSA key pair generated."
+    except:
+        messagebox.showerror(sys.exc_info()[0], sys.exc_info()[1])
+
+
 def show_about():
-    """Show about from menu."""
+    """Show about message box."""
     messagebox.showinfo(
         "About", "Easy Crypt v" + __version__ + "\nArch. Pierpaolo Rasicci\n" +
         "https://github.com/i5ar/eccrypt/")
@@ -268,6 +285,7 @@ def show_about():
 menubar = tk.Menu(root)
 
 filemenu = tk.Menu(menubar, tearoff=0)
+filemenu.add_command(label="Generate key pair", command=generate_key_pair)
 filemenu.add_command(label="Save", command=save_configuration)
 filemenu.add_separator()
 filemenu.add_command(label="Exit", command=root.quit)
@@ -278,16 +296,6 @@ helpmenu.add_command(label="About", command=show_about)
 menubar.add_cascade(label="Help", menu=helpmenu)
 
 root.config(menu=menubar)
-
-
-# Status bar
-# status = tk.Label(
-#     root,
-#     text="Non men che saver, dubbiar m'aggrata.",
-#     bd=1,
-#     relief=tk.SUNKEN,
-#     anchor=tk.W)
-# status.pack(side=tk.BOTTOM, fill=tk.X)
 
 # Title
 root.title("Easy Crypt")

@@ -13,12 +13,15 @@ safely encrypted.
 - Python;
 - Node.js (optional);
 
+Since `v0.0.4` it is possible to generate a key pair directly from the menu
+bar: `File` > `Generate key pair`.
+
 In BSD Unix-like or GNU/Linux distributions you can easily generate a key pair
 using OpenSSH:
 
     ssh-keygen -t rsa
 
-In Windows you can generate a key pair using PuTTY.
+In Windows you can also generate a key pair using PuTTY.
 - Open PuTTYgen;
 - Click the Generate button and move the mouse over the blank area;
 - Copy your public key from the text area and paste it in a new file
@@ -43,6 +46,14 @@ If something goes wrong try to update the package manager:
 
 ### Usage
 
+##### Graphical interface
+
+Since `v0.0.2` is available a simple graphical interface.
+
+> You still need to launch it from the terminal
+
+For the time being, just run `python main.py`.
+
 ##### Terminal
 
 Encrypt a text file:
@@ -52,14 +63,6 @@ Encrypt a text file:
 Decrypt a text file:
 
     python manage.py decrypt data/egg.bin --private-key eccrypt_rsa
-
-##### Graphical interface
-
-Since `v0.0.2` is available a simple graphical interface.
-
-> You still need to launch it from the terminal
-
-For the time being, just run `python main.py`.
 
 ### Note
 
@@ -73,6 +76,7 @@ Generate some dummy text in the data directory:
 
 ##### Changelog
 
+- v0.0.4 - Add generate module (RSA key pair);
 - v0.0.3 - Improve the graphical interface;
 - v0.0.2 - Add a simple graphical interface.
 
