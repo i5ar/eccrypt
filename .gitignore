@@ -82,3 +82,6 @@ eccrypt_rsa
 
 # Data
 data/
+
+# Images
+images/*.png

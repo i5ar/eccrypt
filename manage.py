@@ -17,20 +17,19 @@ parser.add_argument('--public-key', type=str, dest='public',
 parser.add_argument('--private-key', type=str, dest='private',
                     default='eccrypt_rsa',
                     help='RSA private key (default: eccrypt_rsa).')
-# TODO: If multiple input files allow multiple output files.
-parser.add_argument('-o', '--output-file', dest='output', default=None,
-                    help='Output file.')
+parser.add_argument('-o', '--output-files', dest='output', default=None,
+                    nargs='+', help='Output file[s].')
 
 args = parser.parse_args()
 
-crypt = args.crypt  # Crypt action
-files = args.files  # Input file[s]
-public = args.public  # Public key
-private = args.private  # Private key
-output = args.output  # Output file
+crypt = args.crypt  # Crypt action (str)
+files = args.files  # Input file[s] (list)
+public = args.public  # Public key (str)
+private = args.private  # Private key (str)
+output = args.output  # Output file[s] (list)
 
-# TODO: If `output` not provided do not save the data in a file, print instead.
 if crypt == 'encrypt':
     encrypt(*files, rsa_public_key=public, output=output)
+# NOTE: If `output` not provided do not save the data in a file, print instead.
 elif crypt == 'decrypt':
     decrypt(*files, rsa_private_key=private, output=output)

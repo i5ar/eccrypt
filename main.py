@@ -73,7 +73,7 @@ class EasyButtons:
         self.button_open_text_file = tk.Button(
             frame,
             width=20,
-            text="Open text file",
+            text="Open a text file",
             relief=tk.GROOVE,
             # bg=base01,
             command=self.open_text_file)
@@ -84,7 +84,7 @@ class EasyButtons:
             frame,
             width=20,
             state=tk.DISABLED,  # Use "disabled" in `ttk`
-            text="Open encrypted file",
+            text="Open an encrypted file",
             relief=tk.GROOVE,
             # bg=base01,
             command=self.open_encrypted_file)
@@ -93,7 +93,7 @@ class EasyButtons:
         self.button_public_key = tk.Button(
             frame,
             width=20,
-            text="Open public key",
+            text="Open your public key",
             relief=tk.GROOVE,
             # bg=base01,
             command=self.open_public_key_file)
@@ -103,7 +103,7 @@ class EasyButtons:
             frame,
             width=20,
             state=tk.DISABLED,  # Use "disabled" in `ttk`
-            text="Open private key",
+            text="Open your private key",
             relief=tk.GROOVE,
             # bg=base01,
             command=self.open_private_key_file)
@@ -112,7 +112,7 @@ class EasyButtons:
         self.button_save_encrypted_file = tk.Button(
             frame,
             width=20,
-            text="Save encrypted file",
+            text="Save the encrypted file",
             relief=tk.GROOVE,
             # bg=base01,
             command=self.save_encrypted_file)
@@ -121,12 +121,20 @@ class EasyButtons:
         self.button_save_decrypted_file = tk.Button(
             frame,
             width=20,
-            text="Save decrypted file",
+            text="Save the decrypted file",
             relief=tk.GROOVE,
             # bg=base01,
             state=tk.DISABLED,  # Use "disabled" in `ttk`
             command=self.save_decrypted_file)
         self.button_save_decrypted_file.grid(column=2, row=4, padx=20, pady=20)
+
+        self.status = tk.Label(
+            root,
+            text="Start by opening a text file.",
+            bd=1,
+            relief=tk.SUNKEN,
+            anchor=tk.W)
+        self.status.pack(side=tk.BOTTOM, fill=tk.X)
 
     def enable_button_public_key(self, event):
         """Enable encryption buttons."""
@@ -144,6 +152,7 @@ class EasyButtons:
         self.button_open_encrypted_file['state'] = tk.DISABLED
         self.button_save_encrypted_file['state'] = tk.NORMAL
         self.button_save_decrypted_file['state'] = tk.DISABLED
+        self.status['text'] = "Start by opening a text file."
 
     def enable_button_private_key(self, event):
         """Enable decryption buttons."""
@@ -161,66 +170,81 @@ class EasyButtons:
         self.button_open_encrypted_file['state'] = tk.NORMAL
         self.button_save_encrypted_file['state'] = tk.DISABLED
         self.button_save_decrypted_file['state'] = tk.NORMAL
+        self.status['text'] = "Start by opening an encrypted file."
 
     def open_text_file(self):
         """Open text file."""
-        self.text_file_paths = filedialog.askopenfilenames()
-        print(self.text_file_paths)
-        return self.text_file_paths
+        self.text_file_path = filedialog.askopenfilename()
+        print(self.text_file_path)
+        if self.text_file_path:
+            self.status['text'] = "Now you can open the public key."
+        return self.text_file_path
 
     def open_encrypted_file(self):
         """Open encrypted file."""
-        self.encrypted_file_paths = filedialog.askopenfilenames()
-        print(self.encrypted_file_paths)
-        return self.encrypted_file_paths
+        self.encrypted_file_path = filedialog.askopenfilename()
+        print(self.encrypted_file_path)
+        if self.encrypted_file_path:
+            self.status['text'] = "Now you can open the private key."
+        return self.encrypted_file_path
 
     def open_public_key_file(self):
         """Open public key file."""
         self.public_key_file_path = filedialog.askopenfilename()
         print(self.public_key_file_path)
+        if self.public_key_file_path:
+            self.status['text'] = "Now you can save the encrypted file."
         return self.public_key_file_path
 
     def open_private_key_file(self):
         """Open private key file."""
         self.private_key_file_path = filedialog.askopenfilename()
         print(self.private_key_file_path)
+        if self.private_key_file_path:
+            self.status['text'] = "Now you can save the decrypted file."
         return self.private_key_file_path
 
     def save_encrypted_file(self):
         """Save encrypted file."""
-        f = filedialog.asksaveasfile(mode='wb', defaultextension=".bin")
-        # Method `asksaveasfile` return `None` if dialog closed with "Cancel".
-        if f is None:
+        filename = filedialog.asksaveasfilename(
+            defaultextension=".bin",
+            filetypes=(('Binary files', '.bin'), ('All files', '.*')))
+        if not filename:
             return
         try:
-            # TODO: Remove `output` and write the file from here.
             encrypt(
-                ' '.join(self.text_file_paths),  # Convert tuple to string
+                self.text_file_path,
                 rsa_public_key=self.public_key_file_path,
-                output=f.name)
+                output=[filename])  # Convert `output` argument, must be a list
+            self.status['text'] = "File encrypted and saved."
         except NameError as e:
-            print(e)
-
-        # NOTE: Do I need to close the buffered writer?
-        f.close()
+            messagebox.showinfo(e.__class__.__name__, e)
+        except TypeError as e:
+            msg = "Please, select a text file and a valid public key."
+            print(msg, e)
+            messagebox.showinfo(e.__class__.__name__, msg)
 
     def save_decrypted_file(self):
         """Save decrypted file."""
-        f = filedialog.asksaveasfile(mode='w', defaultextension=".txt")
-        # Method `asksaveasfile` return `None` if dialog closed with "Cancel".
-        if f is None:
+        filename = filedialog.asksaveasfilename(
+            defaultextension=".txt",
+            filetypes=(('Text files', '.txt'), ('All files', '.*')))
+        if not filename:
             return
         try:
-            # TODO: Remove `output` and write the file from here.
             decrypt(
-                ' '.join(self.encrypted_file_paths),  # Convert tuple to string
+                self.encrypted_file_path,
                 rsa_private_key=self.private_key_file_path,
-                output=f.name)
+                output=[filename])  # Convert `output` argument, must be a list
+            self.status['text'] = "File decrypted and saved."
+        except TypeError as e:
+            msg = "Please, select an encrypted file and a valid private key."
+            print(msg, e)
+            messagebox.showinfo(e.__class__.__name__, msg)
         except NameError as e:
-            print(e)
-
-        # NOTE: Do I need to close the buffered writer?
-        f.close()
+            messagebox.showinfo(e.__class__.__name__, e)
+        except ValueError as e:
+            messagebox.showinfo(e.__class__.__name__, e)
 
 
 root = tk.Tk()
@@ -231,13 +255,14 @@ b = EasyButtons(root)
 def save_configuration():
     """Save configuration from menu."""
     messagebox.showwarning(
-        "Save", "This function is not yet available. Sorry!")
+        "Save", "This function is not yet available.")
 
 
 def show_about():
     """Show about from menu."""
     messagebox.showinfo(
-        "About", "Easy Crypt v" + __version__ + " \nArch. Pierpaolo Rasicci")
+        "About", "Easy Crypt v" + __version__ + "\nArch. Pierpaolo Rasicci\n" +
+        "https://github.com/i5ar/eccrypt/")
 
 
 menubar = tk.Menu(root)
@@ -256,16 +281,17 @@ root.config(menu=menubar)
 
 
 # Status bar
-status = tk.Label(
-    root,
-    text="Non men che saver, dubbiar m'aggrata.",
-    bd=1,
-    relief=tk.SUNKEN,
-    anchor=tk.W)
-status.pack(side=tk.BOTTOM, fill=tk.X)
+# status = tk.Label(
+#     root,
+#     text="Non men che saver, dubbiar m'aggrata.",
+#     bd=1,
+#     relief=tk.SUNKEN,
+#     anchor=tk.W)
+# status.pack(side=tk.BOTTOM, fill=tk.X)
 
 # Title
 root.title("Easy Crypt")
+root.iconbitmap(r'images\eccrypt.ico')
 
 # Main loop
 root.mainloop()
