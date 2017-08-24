@@ -48,19 +48,19 @@ If something goes wrong try to update the package manager:
 
 ##### Graphical interface
 
-Since `v0.0.2` is available a simple graphical interface.
+Since `v0.0.2` it is available a simple graphical interface.
 
-> You still need to launch it from the terminal
+> You still need to launch it from the terminal.
 
 For the time being, just run `python main.py`.
 
 ##### Terminal
 
-Encrypt a text file:
+Encrypt a file:
 
     python manage.py encrypt data/egg.txt --public-key eccrypt_rsa.pub
 
-Decrypt a text file:
+Decrypt a file:
 
     python manage.py decrypt data/egg.bin --private-key eccrypt_rsa
 
@@ -85,3 +85,4 @@ Generate some dummy text in the data directory:
 - Try out [loremipsum](https://pypi.python.org/pypi/loremipsum) and eventually
 integrate for testing purposes;
 - Store the key pair in a database.
+- Apparently, I need to come up with a hook for the installer.
