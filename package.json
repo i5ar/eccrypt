@@ -1,7 +1,7 @@
 {
   "name": "eccrypt",
-  "version": "0.0.4",
-  "description": "Crypt text files with easy",
+  "version": "0.0.5",
+  "description": "Easy encryption and decryption.",
   "main": "manage.py",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

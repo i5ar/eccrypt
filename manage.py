@@ -3,8 +3,8 @@
 
 import argparse
 
-from encrypt import encrypt
-from decrypt import decrypt
+from eccrypt.encrypt import encrypt
+from eccrypt.decrypt import decrypt
 
 parser = argparse.ArgumentParser(description='AES encryption and decryption.')
 parser.add_argument('crypt', choices=['encrypt', 'decrypt'],

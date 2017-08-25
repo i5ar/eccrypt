@@ -4,7 +4,7 @@
 from Cryptodome.PublicKey import RSA
 
 
-def generate(filename, keytype="rsa"):
+def generate(filename="eccrypt_rsa", keytype="rsa"):
     """Generate RSA key pair."""
     if keytype == "rsa":
         key = RSA.generate(2048)

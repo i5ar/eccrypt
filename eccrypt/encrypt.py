@@ -16,7 +16,7 @@ from Cryptodome.Cipher import AES, PKCS1_OAEP
 
 
 def encrypt(*args, **kwargs):
-    """Encrypt a text file."""
+    """Encrypt a text file using a public key."""
     rsa_public_key = kwargs.get('rsa_public_key')
     for file_input_plain in enumerate(args):
         filename, file_extension = os.path.splitext(file_input_plain[1])

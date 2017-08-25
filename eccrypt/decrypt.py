@@ -8,11 +8,7 @@ from Cryptodome.Cipher import AES, PKCS1_OAEP
 
 
 def decrypt(*args, **kwargs):
-    """Decrypt a text file.
-
-    Return a list `decoded_data_list`.
-    """
-    decoded_data_list = []
+    """Decrypt a binary file using a private key."""
     rsa_private_key = kwargs.get('rsa_private_key')
     for file_input_cipher in enumerate(args):
         filename, file_extension = os.path.splitext(file_input_cipher[1])
@@ -36,7 +32,6 @@ def decrypt(*args, **kwargs):
 
         # Decode data
         decoded_data = data.decode("utf-8")
-        decoded_data_list.append(decoded_data)
 
         # Generate the decrypted file
         try:
@@ -54,5 +49,3 @@ def decrypt(*args, **kwargs):
         except TypeError as e:
             print(file_input_cipher[0], file_input_cipher[1], )
             print(decoded_data)
-
-    return decoded_data_list

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """Simple GUI for Easy Crypt."""
 
+import os
 import sys
 
 import tkinter as tk
@@ -8,11 +9,10 @@ import tkinter as tk
 from tkinter import filedialog
 from tkinter import messagebox
 
-from encrypt import encrypt
-from decrypt import decrypt
-from generate import generate
-
-__version__ = "0.0.4"
+from eccrypt import __version__
+from eccrypt.encrypt import encrypt
+from eccrypt.decrypt import decrypt
+from eccrypt.generate import generate
 
 
 # Solarized colorscheme
@@ -93,6 +93,7 @@ class EasyButtons:
             command=self.open_encrypted_file)
         self.button_open_encrypted_file.grid(column=2, row=2, padx=5, pady=5)
 
+        # TODO: Move this button to the `File` menu as `Import public key`.
         self.button_public_key = tk.Button(
             frame,
             width=20,
@@ -102,6 +103,7 @@ class EasyButtons:
             command=self.open_public_key_file)
         self.button_public_key.grid(column=1, row=3, padx=5, pady=5)
 
+        # TODO: Move this button to the `File` menu as `Import private key`.
         self.button_private_key = tk.Button(
             frame,
             width=20,
@@ -279,7 +281,7 @@ def show_about():
     """Show about message box."""
     messagebox.showinfo(
         "About", "Easy Crypt v" + __version__ + "\nArch. Pierpaolo Rasicci\n" +
-        "https://github.com/i5ar/eccrypt/")
+        "https://github.com/i5ar/eccrypt")
 
 
 menubar = tk.Menu(root)
@@ -299,7 +301,20 @@ root.config(menu=menubar)
 
 # Title
 root.title("Easy Crypt")
-root.iconbitmap(r'images\eccrypt.ico')
+
+# Icon
+if "nt" == os.name:
+    icon_path = os.path.join("images", "eccrypt.ico")
+else:
+    icon_path = os.path.join("images", "eccrypt.gif")
+img = tk.PhotoImage(file=icon_path)
+root.tk.call('wm', 'iconphoto', root._w, img)
+# Eventually
+# if "nt" == os.name:
+#     icon_path = os.path.join("images", "eccrypt.ico")
+# else:
+#     icon_path = "@" + os.path.join("images", "eccrypt.xbm")
+# root.wm_iconbitmap(bitmap=icon_path)
 
 # Main loop
 root.mainloop()
