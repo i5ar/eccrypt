@@ -5,7 +5,12 @@ from Cryptodome.PublicKey import RSA
 
 
 def generate(filename="eccrypt_rsa", keytype="rsa"):
-    """Generate RSA key pair."""
+    """Generate a key pair based on the RSA algorithm.
+
+    Args:
+        filename (str): Name of the key pair.
+
+    """
     if keytype == "rsa":
         key = RSA.generate(2048)
         encrypted_key = key.exportKey()

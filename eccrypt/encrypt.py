@@ -16,7 +16,25 @@ from Cryptodome.Cipher import AES, PKCS1_OAEP
 
 
 def encrypt(*args, **kwargs):
-    """Encrypt a text file using a public key."""
+    """
+    Encrypt a text file using a public key.
+    The encryption is provided by `PyCryptodome`_.
+
+    Args:
+        *args: Input file[s].
+        **kwargs: Optional Arbitrary keyword arguments.
+            They might represent a RSA public key or the output file[s].
+
+    Examples:
+        The first argument is a list while the next argument can be both a
+        string or a list, depending on the keyword.
+
+        >>> encrypt(['egg.txt'], rsa_public_key='rsa.pub', output=['egg.bin'])
+
+    .. _PyCryptodome:
+        https://www.pycryptodome.org
+
+    """
     rsa_public_key = kwargs.get('rsa_public_key')
     for file_input_plain in enumerate(args):
         filename, file_extension = os.path.splitext(file_input_plain[1])

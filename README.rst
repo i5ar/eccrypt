@@ -4,21 +4,26 @@ Easy Crypt
 
 \:closed_lock_with_key: Data encryption with RSA key pair.
 
-    If you write books or just some notes, this package will keep your text
-    safely encrypted.
+    If you write for *secret services*  — or just need to store some
+    confidential text — this package will keep your data safely encrypted.
+    No more leaks!
 
+This project is built on top of PyCryptodome_ and aim to provide an easy and
+accessible interface.
 
 1. The RSA public key is used to encrypt the session key;
 2. The AES session key is used to encrypt the data.
 
-Requirements
+Installation
 ============
 
-- Python;
-- Node.js (optional);
+Requirements
+------------
 
-Since v0.0.4 it is possible to generate a key pair directly from the menu
-bar: ``File`` > ``Generate key pair``.
+- Python;
+
+Since v0.0.4 OpenSSH is not required since it is possible to generate a key
+pair directly from the menu bar: ``File`` > ``Generate key pair``.
 
 In BSD Unix-like or GNU/Linux distributions you can easily generate a key pair
 using OpenSSH::
@@ -35,7 +40,7 @@ In Windows you can also generate a key pair using PuTTY:
 - Close PuTTYgen and **keep your private key secret**.
 
 Installation
-============
+------------
 
 Clone the repository, change the current directory and install the
 dependencies::
@@ -49,8 +54,8 @@ If something goes wrong try to update the package manager::
     python -m pip install --update pip
     pip install -r requirements.txt
 
-Usage
-=====
+Quickstart
+==========
 
 Graphical interface
 -------------------
@@ -93,9 +98,19 @@ create built distributions::
     python setup.py bdist_wininst  # Windows
     python setup.py bdist_rpm  # RPM-based system
 
+Documentation
+-------------
+
+Add new *docstrings* to the API documentation::
+
+    make clean -C ./docs  # remove previous build
+    sphinx-apidoc -o docs eccrypt -f  # force override
+    make html -C ./docs  # build
+
 Changelog
 ---------
 
+- v0.0.5 - Add documentation;
 - v0.0.4 - Add generate module (RSA key pair);
 - v0.0.3 - Improve the graphical interface;
 - v0.0.2 - Add a simple graphical interface.
@@ -109,3 +124,5 @@ TODO
 
 
 .. _loremipsum: https://pypi.python.org/pypi/loremipsum
+.. _PyCryptodome:
+    https://www.pycryptodome.org

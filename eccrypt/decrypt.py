@@ -8,7 +8,25 @@ from Cryptodome.Cipher import AES, PKCS1_OAEP
 
 
 def decrypt(*args, **kwargs):
-    """Decrypt a binary file using a private key."""
+    """Decrypt a binary file using a private key.
+
+    The decryption is provided by `PyCryptodome`_.
+
+    Args:
+        *args: Input file[s].
+        **kwargs: Optional Arbitrary keyword arguments.
+            They might represent a RSA private key or the output file[s].
+
+    Examples:
+        The first argument is a list while the next argument can be both a
+        string or a list, depending on the keyword.
+
+        >>> decrypt(['spam.bin'], rsa_private_key='rsa', output=['spam.text'])
+
+    .. _PyCryptodome:
+        https://www.pycryptodome.org
+
+    """
     rsa_private_key = kwargs.get('rsa_private_key')
     for file_input_cipher in enumerate(args):
         filename, file_extension = os.path.splitext(file_input_cipher[1])
