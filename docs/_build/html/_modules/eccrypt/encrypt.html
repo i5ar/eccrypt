@@ -1,0 +1,182 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>eccrypt.encrypt &#8212; Easy Crypt 0.0.5 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.0.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for eccrypt.encrypt</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="sd">&quot;&quot;&quot;Encrypt a text file.</span>
+
+<span class="sd">https://www.pycryptodome.org/en/latest/src/examples.html#encrypt-data-with-rsa</span>
+
+<span class="sd">Because of how the RSA algorithm works it is not possible to encrypt large</span>
+<span class="sd">files therefore the RSA key is used to encrypt the session key and the AES</span>
+<span class="sd">session key is used to encrypt the data.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">Cryptodome.PublicKey</span> <span class="k">import</span> <span class="n">RSA</span>
+<span class="kn">from</span> <span class="nn">Cryptodome.Random</span> <span class="k">import</span> <span class="n">get_random_bytes</span>
+<span class="kn">from</span> <span class="nn">Cryptodome.Cipher</span> <span class="k">import</span> <span class="n">AES</span><span class="p">,</span> <span class="n">PKCS1_OAEP</span>
+
+
+<div class="viewcode-block" id="encrypt"><a class="viewcode-back" href="../../eccrypt.html#eccrypt.encrypt.encrypt">[docs]</a><span class="k">def</span> <span class="nf">encrypt</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Encrypt a text file using a public key.</span>
+<span class="sd">    The encryption is provided by `PyCryptodome`_.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        *args: Input file[s].</span>
+<span class="sd">        **kwargs: Optional Arbitrary keyword arguments.</span>
+<span class="sd">            They might represent a RSA public key or the output file[s].</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        The first argument is a list while the next argument can be both a</span>
+<span class="sd">        string or a list, depending on the keyword.</span>
+
+<span class="sd">        &gt;&gt;&gt; encrypt([&#39;egg.txt&#39;], rsa_public_key=&#39;rsa.pub&#39;, output=[&#39;egg.bin&#39;])</span>
+
+<span class="sd">    .. _PyCryptodome:</span>
+<span class="sd">        https://www.pycryptodome.org</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rsa_public_key</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rsa_public_key&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">file_input_plain</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+        <span class="n">filename</span><span class="p">,</span> <span class="n">file_extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">file_input_plain</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">defout</span> <span class="o">=</span> <span class="n">filename</span> <span class="o">+</span> <span class="s2">&quot;.bin&quot;</span>  <span class="c1"># Default output :)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">file_output</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span>
+                <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                    <span class="s1">&#39;output&#39;</span><span class="p">)[</span><span class="n">file_input_plain</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="ow">or</span> <span class="n">defout</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">IndexError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Did you provided more input files than output files?&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span>
+                <span class="s1">&#39;Enter the next output file[&#39;</span> <span class="o">+</span> <span class="n">defout</span> <span class="o">+</span> <span class="s1">&#39;]: &#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">defout</span>
+            <span class="n">file_output</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Probably you didn&#39;t provided an output:&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+            <span class="c1"># The output file will be in the same directory of the input file.</span>
+            <span class="n">file_output</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">defout</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Get the public key</span>
+        <span class="n">recipient_key</span> <span class="o">=</span> <span class="n">RSA</span><span class="o">.</span><span class="n">import_key</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">rsa_public_key</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+
+        <span class="c1"># Generate the random password file</span>
+        <span class="n">session_key</span> <span class="o">=</span> <span class="n">get_random_bytes</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+
+        <span class="c1"># Encrypt the session key with the public RSA key</span>
+        <span class="n">cipher_rsa</span> <span class="o">=</span> <span class="n">PKCS1_OAEP</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">recipient_key</span><span class="p">)</span>
+        <span class="n">file_output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">cipher_rsa</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">session_key</span><span class="p">))</span>
+
+        <span class="c1"># Get the data from a text file as byte strings</span>
+        <span class="n">file_in</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_input_plain</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file_in</span><span class="p">])</span>
+        <span class="n">file_in</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="c1"># Encrypt the data with the AES session key</span>
+        <span class="n">cipher_aes</span> <span class="o">=</span> <span class="n">AES</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">session_key</span><span class="p">,</span> <span class="n">AES</span><span class="o">.</span><span class="n">MODE_EAX</span><span class="p">)</span>
+        <span class="n">ciphertext</span><span class="p">,</span> <span class="n">tag</span> <span class="o">=</span> <span class="n">cipher_aes</span><span class="o">.</span><span class="n">encrypt_and_digest</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="p">[</span><span class="n">file_output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">(</span><span class="n">cipher_aes</span><span class="o">.</span><span class="n">nonce</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">ciphertext</span><span class="p">)]</span>
+        <span class="n">file_output</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/eccrypt.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Pierpaolo Rasicci.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

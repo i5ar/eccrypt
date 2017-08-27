@@ -1,0 +1,207 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>eccrypt package &#8212; Easy Crypt 0.0.5 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="API" href="modules.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="eccrypt-package">
+<h1>eccrypt package<a class="headerlink" href="#eccrypt-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-eccrypt.decrypt">
+<span id="eccrypt-decrypt-module"></span><h2>eccrypt.decrypt module<a class="headerlink" href="#module-eccrypt.decrypt" title="Permalink to this headline">¶</a></h2>
+<p>Decrypt a text file.</p>
+<dl class="function">
+<dt id="eccrypt.decrypt.decrypt">
+<code class="descclassname">eccrypt.decrypt.</code><code class="descname">decrypt</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/eccrypt/decrypt.html#decrypt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#eccrypt.decrypt.decrypt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decrypt a binary file using a private key.</p>
+<p>The decryption is provided by <a class="reference external" href="https://www.pycryptodome.org">PyCryptodome</a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>*args</strong> – Input file[s].</li>
+<li><strong>**kwargs</strong> – Optional Arbitrary keyword arguments.
+They might represent a RSA private key or the output file[s].</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<p>The first argument is a list while the next argument can be both a
+string or a list, depending on the keyword.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">decrypt</span><span class="p">([</span><span class="s1">&#39;spam.bin&#39;</span><span class="p">],</span> <span class="n">rsa_private_key</span><span class="o">=</span><span class="s1">&#39;rsa&#39;</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;spam.text&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-eccrypt.encrypt">
+<span id="eccrypt-encrypt-module"></span><h2>eccrypt.encrypt module<a class="headerlink" href="#module-eccrypt.encrypt" title="Permalink to this headline">¶</a></h2>
+<p>Encrypt a text file.</p>
+<p><a class="reference external" href="https://www.pycryptodome.org/en/latest/src/examples.html#encrypt-data-with-rsa">https://www.pycryptodome.org/en/latest/src/examples.html#encrypt-data-with-rsa</a></p>
+<p>Because of how the RSA algorithm works it is not possible to encrypt large
+files therefore the RSA key is used to encrypt the session key and the AES
+session key is used to encrypt the data.</p>
+<dl class="function">
+<dt id="eccrypt.encrypt.encrypt">
+<code class="descclassname">eccrypt.encrypt.</code><code class="descname">encrypt</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/eccrypt/encrypt.html#encrypt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#eccrypt.encrypt.encrypt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encrypt a text file using a public key.
+The encryption is provided by <a class="reference external" href="https://www.pycryptodome.org">PyCryptodome</a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>*args</strong> – Input file[s].</li>
+<li><strong>**kwargs</strong> – Optional Arbitrary keyword arguments.
+They might represent a RSA public key or the output file[s].</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<p>The first argument is a list while the next argument can be both a
+string or a list, depending on the keyword.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">encrypt</span><span class="p">([</span><span class="s1">&#39;egg.txt&#39;</span><span class="p">],</span> <span class="n">rsa_public_key</span><span class="o">=</span><span class="s1">&#39;rsa.pub&#39;</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;egg.bin&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-eccrypt.generate">
+<span id="eccrypt-generate-module"></span><h2>eccrypt.generate module<a class="headerlink" href="#module-eccrypt.generate" title="Permalink to this headline">¶</a></h2>
+<p>Generate RSA key pair.</p>
+<dl class="function">
+<dt id="eccrypt.generate.generate">
+<code class="descclassname">eccrypt.generate.</code><code class="descname">generate</code><span class="sig-paren">(</span><em>filename='eccrypt_rsa'</em>, <em>keytype='rsa'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/eccrypt/generate.html#generate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#eccrypt.generate.generate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a key pair based on the RSA algorithm.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> (<em>str</em>) – Name of the key pair.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-eccrypt">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-eccrypt" title="Permalink to this headline">¶</a></h2>
+<p>Easy Crypt.</p>
+<p>Easy encryption and decryption.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="index.html">
+    <img class="logo" src="_static/eccrypt.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">eccrypt package</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">API</a><ul>
+      <li>Previous: <a href="modules.html" title="previous chapter">API</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Pierpaolo Rasicci.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/eccrypt.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
