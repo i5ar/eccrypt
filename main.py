@@ -60,7 +60,7 @@ class EasyButtons:
             value="PUB",
             # bg=base03,
             command=lambda: self.enable_button_public_key(None))
-        self.radiobutton_public_key.grid(column=1, row=1, padx=20, pady=20)
+        self.radiobutton_public_key.grid(column=1, row=1, padx=5, pady=5)
 
         self.radiobutton_private_key = tk.Radiobutton(
             frame,
@@ -70,7 +70,7 @@ class EasyButtons:
             value="PRI",
             # bg=base03,
             command=lambda: self.enable_button_private_key(None))
-        self.radiobutton_private_key.grid(column=2, row=1, padx=20, pady=20)
+        self.radiobutton_private_key.grid(column=2, row=1, padx=5, pady=5)
 
         # Buttons
         self.button_open_text_file = tk.Button(
@@ -93,27 +93,6 @@ class EasyButtons:
             command=self.open_encrypted_file)
         self.button_open_encrypted_file.grid(column=2, row=2, padx=5, pady=5)
 
-        # TODO: Move this button to the `File` menu as `Import public key`.
-        self.button_public_key = tk.Button(
-            frame,
-            width=20,
-            text="Open your public key",
-            relief=tk.GROOVE,
-            # bg=base01,
-            command=self.open_public_key_file)
-        self.button_public_key.grid(column=1, row=3, padx=5, pady=5)
-
-        # TODO: Move this button to the `File` menu as `Import private key`.
-        self.button_private_key = tk.Button(
-            frame,
-            width=20,
-            state=tk.DISABLED,  # Use "disabled" in `ttk`
-            text="Open your private key",
-            relief=tk.GROOVE,
-            # bg=base01,
-            command=self.open_private_key_file)
-        self.button_private_key.grid(column=2, row=3, padx=5, pady=5)
-
         self.button_save_encrypted_file = tk.Button(
             frame,
             width=20,
@@ -121,7 +100,7 @@ class EasyButtons:
             relief=tk.GROOVE,
             # bg=base01,
             command=self.save_encrypted_file)
-        self.button_save_encrypted_file.grid(column=1, row=4, padx=20, pady=20)
+        self.button_save_encrypted_file.grid(column=1, row=4, padx=5, pady=5)
 
         self.button_save_decrypted_file = tk.Button(
             frame,
@@ -131,7 +110,7 @@ class EasyButtons:
             # bg=base01,
             state=tk.DISABLED,  # Use "disabled" in `ttk`
             command=self.save_decrypted_file)
-        self.button_save_decrypted_file.grid(column=2, row=4, padx=20, pady=20)
+        self.button_save_decrypted_file.grid(column=2, row=4, padx=5, pady=5)
 
         self.status = tk.Label(
             root,
@@ -144,15 +123,11 @@ class EasyButtons:
     def enable_button_public_key(self, event):
         """Enable encryption buttons."""
         # NOTE: Use `state` attribute with `ttk` buttons
-        # self.button_public_key.state(["!disabled"])
-        # self.button_private_key.state(["disabled"])
         # self.button_open_text_file.state(["!disabled"])
         # self.button_open_encrypted_file.state(["disabled"])
         # self.button_save_encrypted_file.state(["!disabled"])
         # self.button_save_decrypted_file.state(["disabled"])
         # NOTE: Use `state` key with `tk` buttons
-        self.button_public_key['state'] = tk.NORMAL
-        self.button_private_key['state'] = tk.DISABLED
         self.button_open_text_file['state'] = tk.NORMAL
         self.button_open_encrypted_file['state'] = tk.DISABLED
         self.button_save_encrypted_file['state'] = tk.NORMAL
@@ -162,15 +137,11 @@ class EasyButtons:
     def enable_button_private_key(self, event):
         """Enable decryption buttons."""
         # NOTE: Use `state` attribute with `ttk` buttons
-        # self.button_public_key.state(["disabled"])
-        # self.button_private_key.state(["!disabled"])
         # self.button_open_text_file.state(["disabled"])
         # self.button_open_encrypted_file.state(["!disabled"])
         # self.button_save_encrypted_file.state(["disabled"])
         # self.button_save_decrypted_file.state(["!disabled"])
         # NOTE: Use `state` key with `tk` buttons
-        self.button_public_key['state'] = tk.DISABLED
-        self.button_private_key['state'] = tk.NORMAL
         self.button_open_text_file['state'] = tk.DISABLED
         self.button_open_encrypted_file['state'] = tk.NORMAL
         self.button_save_encrypted_file['state'] = tk.DISABLED
@@ -182,7 +153,7 @@ class EasyButtons:
         self.text_file_path = filedialog.askopenfilename()
         print(self.text_file_path)
         if self.text_file_path:
-            self.status['text'] = "Now you can open the public key."
+            self.status['text'] = "Now you can import a public key."
         return self.text_file_path
 
     def open_encrypted_file(self):
@@ -190,24 +161,8 @@ class EasyButtons:
         self.encrypted_file_path = filedialog.askopenfilename()
         print(self.encrypted_file_path)
         if self.encrypted_file_path:
-            self.status['text'] = "Now you can open the private key."
+            self.status['text'] = "Now you can import the private key."
         return self.encrypted_file_path
-
-    def open_public_key_file(self):
-        """Open public key file."""
-        self.public_key_file_path = filedialog.askopenfilename()
-        print(self.public_key_file_path)
-        if self.public_key_file_path:
-            self.status['text'] = "Now you can save the encrypted file."
-        return self.public_key_file_path
-
-    def open_private_key_file(self):
-        """Open private key file."""
-        self.private_key_file_path = filedialog.askopenfilename()
-        print(self.private_key_file_path)
-        if self.private_key_file_path:
-            self.status['text'] = "Now you can save the decrypted file."
-        return self.private_key_file_path
 
     def save_encrypted_file(self):
         """Save encrypted file."""
@@ -259,10 +214,18 @@ b = EasyButtons(root)
 
 
 # Menu bar
-def save_configuration():
-    """Save configuration from menu."""
-    messagebox.showwarning(
-        "Save", "This function is not yet available.")
+def import_private_key():
+    """Open private key file."""
+    b.private_key_file_path = filedialog.askopenfilename()
+    print(b.private_key_file_path)
+    return b.private_key_file_path
+
+
+def import_public_key():
+    """Open public key file."""
+    b.public_key_file_path = filedialog.askopenfilename()
+    print(b.public_key_file_path)
+    return b.public_key_file_path
 
 
 def generate_key_pair():
@@ -288,7 +251,8 @@ menubar = tk.Menu(root)
 
 filemenu = tk.Menu(menubar, tearoff=0)
 filemenu.add_command(label="Generate key pair", command=generate_key_pair)
-filemenu.add_command(label="Save", command=save_configuration)
+filemenu.add_command(label="Import private key", command=import_private_key)
+filemenu.add_command(label="Import pulic key", command=import_public_key)
 filemenu.add_separator()
 filemenu.add_command(label="Exit", command=root.quit)
 menubar.add_cascade(label="File", menu=filemenu)
