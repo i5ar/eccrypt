@@ -54,7 +54,8 @@ coverage.xml
 local_settings.py
 
 # Sphinx documentation
-docs/_build/doctrees
+!docs/build/
+docs/build/doctrees/
 
 # PyBuilder
 target/

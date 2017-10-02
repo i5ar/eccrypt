@@ -1,5 +1,5 @@
-API
-===
+eccrypt
+=======
 
 .. toctree::
    :maxdepth: 4

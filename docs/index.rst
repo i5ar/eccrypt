@@ -1,5 +1,5 @@
-.. eccrypt documentation master file, created by
-   sphinx-quickstart on Fri Aug 25 20:03:19 2017.
+.. Easy Crypt documentation master file, created by
+   sphinx-quickstart on Mon Oct 2 21:44:09 2017.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 

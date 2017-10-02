@@ -2,7 +2,7 @@
 Easy Crypt
 ==========
 
-\:closed_lock_with_key: Data encryption with RSA key pair.
+Data encryption with RSA key pair.
 
     If you write for *secret services*  — or just need to store some
     confidential text — this package will keep your data safely encrypted.
