@@ -51,6 +51,7 @@ def encrypt(*args, **kwargs):
         except TypeError as e:
             print("Probably you didn't provided an output:", e)
             # The output file will be in the same directory of the input file.
+            print("The output file will be " + defout)
             file_output = open(defout, "wb")
 
         # Get the public key

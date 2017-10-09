@@ -4,8 +4,8 @@ Easy Crypt
 
 Data encryption with RSA key pair.
 
-    If you write for *secret services*  — or just need to store some
-    confidential text — this package will keep your data safely encrypted.
+    If you need to store some confidential text — this package will keep your
+    data safely encrypted.
     No more leaks!
 
 This project is built on top of PyCryptodome_ and aim to provide an easy and
@@ -22,13 +22,12 @@ Requirements
 
 - Python;
 
-Since v0.0.4 OpenSSH is not required since it is possible to generate a key
-pair directly from the menu bar: ``File`` > ``Generate key pair``.
 
-In BSD Unix-like or GNU/Linux distributions you can easily generate a key pair
+In BSD Unix or GNU/Linux distributions you can easily generate a key pair
 using OpenSSH::
 
     ssh-keygen -t rsa
+    ssh-keygen -y -f eccrypt_rsa > eccrypt_rsa.pub  # if you have a private one
 
 In Windows you can also generate a key pair using PuTTY:
 
@@ -39,6 +38,9 @@ In Windows you can also generate a key pair using PuTTY:
 - Save your pivate key (ex. eccrypt_rsa);
 - Close PuTTYgen and **keep your private key secret**.
 
+Since v0.0.4 it is possible to generate a key pair directly from the menu
+bar: ``File`` > ``Generate key pair``.
+
 Installation
 ------------
 
@@ -47,7 +49,7 @@ dependencies::
 
     git clone https://github.com/i5ar/eccrypt.git
     cd eccrypt
-    pip install -r requirements.txt
+    python setup.py install
 
 If something goes wrong try to update the package manager::
 
@@ -71,11 +73,11 @@ Terminal
 
 Encrypt a file::
 
-    python manage.py encrypt data/egg.txt --public-key eccrypt_rsa.pub
+    eccrypt encrypt data/egg.txt --public-key eccrypt_rsa.pub
 
 Decrypt a file::
 
-    python manage.py decrypt data/egg.bin --private-key eccrypt_rsa
+    eccrypt decrypt data/egg.bin --private-key eccrypt_rsa
 
 Note
 ====
@@ -110,6 +112,7 @@ Add new *docstrings* to the API documentation::
 Changelog
 ---------
 
+- v0.0.6 - Add command line script;
 - v0.0.5 - Add documentation;
 - v0.0.4 - Add generate module (RSA key pair);
 - v0.0.3 - Improve the graphical interface;
