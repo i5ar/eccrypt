@@ -26,6 +26,7 @@ setup(
     url='https://github.com/i5ar/eccrypt',
     packages=['eccrypt'],
     install_requires=[
+        'future',
         'pycryptodomex',
     ],
     classifiers=[

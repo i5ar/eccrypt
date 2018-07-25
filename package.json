@@ -12,7 +12,7 @@
   "author": "Pierpaolo Rasicci",
   "license": "MIT",
   "devDependencies": {
-    "lorem-ipsum": "^1.0.4",
+    "lorem-ipsum": "^1.0.5",
     "mkdirp": "^0.5.1"
   }
 }

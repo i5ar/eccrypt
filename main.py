@@ -1,13 +1,31 @@
 #!/usr/bin/env python
 """Simple GUI for Easy Crypt."""
 
+from __future__ import (
+    print_function,
+    division,
+    unicode_literals
+)
+
 import os
 import sys
 
-import tkinter as tk
+try:
+    import Tkinter as tk
+except ImportError:
+    import tkinter as tk
+
+try:
+    import tkFileDialog as filedialog
+except ImportError:
+    from tkinter import filedialog
+
+try:
+    import tkMessageBox as messagebox
+except ImportError:
+    from tkinter import messagebox
+
 # from tkinter import ttk
-from tkinter import filedialog
-from tkinter import messagebox
 
 from eccrypt import __version__
 from eccrypt.encrypt import encrypt
