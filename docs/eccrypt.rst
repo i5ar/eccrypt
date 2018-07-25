@@ -4,24 +4,24 @@ eccrypt package
 Submodules
 ----------
 
-eccrypt\.decrypt module
------------------------
+eccrypt.decrypt module
+----------------------
 
 .. automodule:: eccrypt.decrypt
     :members:
     :undoc-members:
     :show-inheritance:
 
-eccrypt\.encrypt module
------------------------
+eccrypt.encrypt module
+----------------------
 
 .. automodule:: eccrypt.encrypt
     :members:
     :undoc-members:
     :show-inheritance:
 
-eccrypt\.generate module
-------------------------
+eccrypt.generate module
+-----------------------
 
 .. automodule:: eccrypt.generate
     :members:
